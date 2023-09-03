@@ -53,8 +53,6 @@ jobs:
       shell: pwsh
       run: |
         ./.sonar/scanner/dotnet-sonarscanner begin /k:"bsalo203_UseCase1" /o:"bsalo203" /d:sonar.cs.opencover.reportsPaths="./results/coverage/coverage.opencover.xml" && dotnet build && dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet restore UseCase1/UseCase1.csproj
-        dotnet build UseCase1/UseCase1.csproj --no-restore
         dotnet restore UseCase1Test/UseCase1Test.csproj
         dotnet build UseCase1Test/UseCase1Test.csproj --no-restore
         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
