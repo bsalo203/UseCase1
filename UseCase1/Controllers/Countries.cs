@@ -20,21 +20,21 @@ namespace UseCase1.Controllers
         {
             try
             {
-                List<OutputModel> countries = countriesService.GetAllCountries().Result;
+                countriesService.GetAllCountries();
                 if (!string.IsNullOrEmpty(input.CountryName))
-                    countries = countriesService.FilterByCountryName(input.CountryName).Result;
-                else if (input.PopulationInMillions != null)
-                    countries = countriesService.FilterByPopulation(input.PopulationInMillions).Result;
-                else if (!string.IsNullOrEmpty(input.SortCountryName))
-                    countries = countriesService.SortByCountryName(input.SortCountryName ?? string.Empty).Result;
-                else if (input.Limit != null)
-                    countries = countriesService.LimitRecords((int)input.Limit).Result;
-                return Ok(countries);
+                    countriesService.FilterByCountryName(input.CountryName);
+                if (input.PopulationInMillions != null)
+                    countriesService.FilterByPopulation((int)input.PopulationInMillions);
+                if (!string.IsNullOrEmpty(input.SortByCountryName))
+                    countriesService.SortByCountryName(input.SortByCountryName ?? string.Empty);
+                if (input.Limit != null)
+                    countriesService.LimitRecords((int)input.Limit);
+                return Ok(countriesService.ListOfCountries);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-}
+        }
     }
 }

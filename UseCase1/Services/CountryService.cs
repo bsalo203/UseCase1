@@ -1,4 +1,5 @@
-﻿using UseCase1.Clients;
+﻿using System.Reflection.Metadata.Ecma335;
+using UseCase1.Clients;
 using UseCase1.Clients.Interfaces;
 using UseCase1.Controllers;
 using UseCase1.Models;
@@ -9,49 +10,47 @@ namespace UseCase1.Services
     public class CountryService : ICountryService
     {
         readonly ICountryClient countriesClient;
+        private List<OutputModel> listOfCountries = new List<OutputModel>();
+        public List<OutputModel> ListOfCountries
+        {
+            get { return listOfCountries; }
+        }
         public CountryService(ICountryClient _countriesClient)
         {
             countriesClient = _countriesClient;
         }
 
-        public async Task<List<OutputModel>> FilterByCountryName(string countryName)
+        public void FilterByCountryName(string countryName)
         {
-            List<OutputModel> _countries = await GetAllCountries();
-            return _countries.Where(c => !string.IsNullOrEmpty(c.Name) && c.Name.Contains(countryName, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            listOfCountries = listOfCountries.Where(c => !string.IsNullOrEmpty(c.Name) && c.Name.Contains(countryName, System.StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        public async Task<List<OutputModel>> FilterByPopulation(int? populationInMillions)
+        public void FilterByPopulation(int populationInMillions)
         {
-            List<OutputModel> _countries = await GetAllCountries();
-            int realPopulation = (populationInMillions == 0 ? 1 : populationInMillions ?? 1) * 1000000;
-            return _countries.Where(c => c.Population < realPopulation).ToList();
+            int realPopulation = (populationInMillions == 0 ? 1 : populationInMillions) * 1000000;
+            listOfCountries = listOfCountries.Where(c => c.Population < realPopulation).ToList();
         }
 
-        public async Task<List<OutputModel>> GetAllCountries()
+        public void GetAllCountries()
         {
-            List<Country> countryList = await countriesClient.GetAllCountriesAsync() ?? new List<Country>();
-
-            List<OutputModel> outputModel = countryList.Select(x => x.ConvertToOutput()).ToList();
-
-            return outputModel;
+            List<Country> countryList = countriesClient.GetAllCountriesAsync().Result ?? new List<Country>();
+            listOfCountries = countryList.Select(x => x.ConvertToOutput()).ToList();
         }
 
-        public async Task<List<OutputModel>> LimitRecords(int limit)
+        public void LimitRecords(int limit)
         {
-            List<OutputModel> _countries = await GetAllCountries();
-            return _countries.Take(limit).ToList();
+            listOfCountries = listOfCountries.Take(limit).ToList();
         }
 
-        public async Task<List<OutputModel>> SortByCountryName(string sortCountryName)
+        public void SortByCountryName(string sortCountryName)
         {
-            List<OutputModel> _countries = await GetAllCountries();
             if (sortCountryName.ToLower() == "ascend")
             {
-                return _countries.OrderBy(c => c.Name).ToList();
+                listOfCountries = listOfCountries.OrderBy(c => c.Name).ToList();
             }
             else if (sortCountryName.ToLower() == "descend")
             {
-                return _countries.OrderByDescending(c => c.Name).ToList();
+                listOfCountries = listOfCountries.OrderByDescending(c => c.Name).ToList();
             }
             else
             {
