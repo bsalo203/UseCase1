@@ -1,0 +1,51 @@
+o	Create a function that accepts numbers as an attribute and can limit the number of records. 
+o	The functionality should accept a number and retrieve first n records (e.g., providing number `15` I should receive 15 first records from API). 
+in C# .Net 6
+ChatGPT
+To achieve this functionality, we can assume you have an API endpoint that serves a list of records. Let's imagine the records are of type Record and they're stored in a list.
+
+Here's how you could design a simple function in a C# Web API using ASP.NET Core 6 to retrieve the first n records based on the input:
+
+Setting up the Model:
+
+csharp
+Copy code
+public class Record
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    // Add other properties as needed
+}
+Setting up the Controller:
+
+csharp
+Copy code
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+
+[ApiController]
+[Route("api/[controller]")]
+public class RecordsController : ControllerBase
+{
+    // Sample data for demonstration purposes.
+    private List<Record> _records = new List<Record>
+    {
+        new Record { Id = 1, Name = "Record 1" },
+        new Record { Id = 2, Name = "Record 2" },
+        // ... populate with more records as needed
+    };
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Record>> GetFirstNRecords(int n)
+    {
+        return _records.Take(n).ToList();
+    }
+}
+With this setup, you can make a GET request to the endpoint /api/records?n=15 to retrieve the first 15 records from your data source.
+
+Remember:
+
+You may need to replace the sample data with an actual data source or database connection.
+Always ensure you handle potential exceptions or errors that may occur when fetching data.
+Pagination can be a more robust way to handle record fetching if you're working with a larger dataset.

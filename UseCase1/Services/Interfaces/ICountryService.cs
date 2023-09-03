@@ -7,6 +7,7 @@ namespace UseCase1.Services.Interfaces
         Task<List<OutputModel>> FilterByCountryName(string countryName);
         Task<List<OutputModel>> FilterByPopulation(int? populationInMillions);
         Task<List<OutputModel>> GetAllCountries();
+        Task<List<OutputModel>> LimitRecords(int limit);
         Task<List<OutputModel>> SortByCountryName(string sortCountryName);
     }
 }

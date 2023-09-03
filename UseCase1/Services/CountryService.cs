@@ -1,5 +1,6 @@
 ﻿using UseCase1.Clients;
 using UseCase1.Clients.Interfaces;
+using UseCase1.Controllers;
 using UseCase1.Models;
 using UseCase1.Services.Interfaces;
 
@@ -33,6 +34,12 @@ namespace UseCase1.Services
             List<OutputModel> outputModel = countryList.Select(x => x.ConvertToOutput()).ToList();
 
             return outputModel;
+        }
+
+        public async Task<List<OutputModel>> LimitRecords(int limit)
+        {
+            List<OutputModel> _countries = await GetAllCountries();
+            return _countries.Take(limit).ToList();
         }
 
         public async Task<List<OutputModel>> SortByCountryName(string sortCountryName)

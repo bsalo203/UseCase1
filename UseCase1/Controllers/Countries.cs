@@ -22,13 +22,14 @@ namespace UseCase1.Controllers
             {
                 List<OutputModel> countries = countriesService.GetAllCountries().Result;
                 if (!string.IsNullOrEmpty(input.CountryName))
-                    return Ok(countriesService.FilterByCountryName(input.CountryName).Result);
+                    countries = countriesService.FilterByCountryName(input.CountryName).Result;
                 else if (input.PopulationInMillions != null)
-                    return Ok(countriesService.FilterByPopulation(input.PopulationInMillions).Result);
+                    countries = countriesService.FilterByPopulation(input.PopulationInMillions).Result;
                 else if (!string.IsNullOrEmpty(input.SortCountryName))
-                    return Ok(countriesService.SortByCountryName(input.SortCountryName ?? string.Empty).Result);
-                else
-                    return Ok(countries);
+                    countries = countriesService.SortByCountryName(input.SortCountryName ?? string.Empty).Result;
+                else if (input.Limit != null)
+                    countries = countriesService.LimitRecords((int)input.Limit).Result;
+                return Ok(countries);
             }
             catch (Exception ex)
             {
