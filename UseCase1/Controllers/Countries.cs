@@ -18,7 +18,9 @@ namespace UseCase1.Controllers
         [HttpGet]
         public List<OutputModel> GetAllCountries([FromQuery] InputModel input)
         {
-            return countriesService.GetAllCountries().Result;
+            if (string.IsNullOrEmpty(input.CountryName))
+                return countriesService.GetAllCountries().Result;
+            return countriesService.FilterByCountryName(input.CountryName).Result;
         }
     }
 }

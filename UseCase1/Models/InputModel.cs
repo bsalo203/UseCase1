@@ -2,7 +2,7 @@
 {
     public class InputModel
     {
-        public string? String1 { get; set; }
+        public string? CountryName { get; set; }
         public int? Number { get; set; }
         public string? String2 { get; set; }
     }

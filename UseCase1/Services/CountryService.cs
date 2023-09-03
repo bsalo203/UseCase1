@@ -12,6 +12,13 @@ namespace UseCase1.Services
         {
             countriesClient = _countriesClient;
         }
+
+        public async Task<List<OutputModel>> FilterByCountryName(string countryName)
+        {
+            List<OutputModel> _countries = await GetAllCountries();
+            return _countries.Where(c => !string.IsNullOrEmpty(c.Name) && c.Name.Contains(countryName, System.StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
         public async Task<List<OutputModel>> GetAllCountries()
         {
             List<Country> countryList = await countriesClient.GetAllCountriesAsync() ?? new List<Country>();

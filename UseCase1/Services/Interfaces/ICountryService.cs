@@ -4,6 +4,7 @@ namespace UseCase1.Services.Interfaces
 {
     public interface ICountryService
     {
+        Task<List<OutputModel>> FilterByCountryName(string countryName);
         Task<List<OutputModel>> GetAllCountries();
     }
 }
