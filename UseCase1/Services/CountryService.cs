@@ -7,14 +7,14 @@ namespace UseCase1.Services
 {
     public class CountryService : ICountryService
     {
-        ICountryClient countriesClient;
+        readonly ICountryClient countriesClient;
         public CountryService(ICountryClient _countriesClient)
         {
             countriesClient = _countriesClient;
         }
         public async Task<List<OutputModel>> GetAllCountries()
         {
-            List<Country> countryList = await countriesClient.GetAllCountriesAsync();
+            List<Country> countryList = await countriesClient.GetAllCountriesAsync() ?? new List<Country>();
 
             List<OutputModel> outputModel = countryList.Select(x => x.ConvertToOutput()).ToList();
 

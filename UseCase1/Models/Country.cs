@@ -4,14 +4,14 @@ namespace UseCase1.Models
 {
     public class Country
     {
-        public Name Name { get; set; }
-        public List<string> Capital { get; set; }
+        public Name? Name { get; set; }
+        public List<string>? Capital { get; set; }
 
         internal OutputModel ConvertToOutput()
         {
             return new OutputModel
             {
-                Capital = Capital?[0],
+                Capital = Capital?[0] ?? null,
                 Name = Name?.Official
             };
         }

@@ -9,7 +9,7 @@ namespace UseCase1.Controllers
     [ApiController]
     public class Countries : ControllerBase
     {
-        ICountryService countriesService;
+        readonly ICountryService countriesService;
         public Countries(ICountryService _countriesService)
         {
             countriesService = _countriesService;

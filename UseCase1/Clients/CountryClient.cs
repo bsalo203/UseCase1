@@ -13,7 +13,7 @@ namespace UseCase1.Clients
             _httpClient = httpClient;
         }
 
-        public async Task<List<Country>> GetAllCountriesAsync()
+        public async Task<List<Country>?> GetAllCountriesAsync()
         {
             using (var response = await _httpClient.GetAsync("https://restcountries.com/v3.1/all"))
             {
