@@ -24,7 +24,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore UseCase1/UseCase1.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build UseCase1/UseCase1.csproj --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Cache SonarCloud packages
