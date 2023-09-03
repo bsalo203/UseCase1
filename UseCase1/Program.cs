@@ -1,3 +1,8 @@
+using UseCase1.Services.Interfaces;
+using UseCase1.Services;
+using UseCase1.Clients.Interfaces;
+using UseCase1.Clients;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +11,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<ICountryService, CountryService>();
 
+builder.Services.AddHttpClient<ICountryClient, CountryClient>(client =>
+{
+    client.BaseAddress = new Uri("https://restcountries.com/v3.1/all");  // Set your API base address here
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
