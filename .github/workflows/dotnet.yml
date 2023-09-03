@@ -53,5 +53,5 @@ jobs:
       shell: pwsh
       run: |
         ./.sonar/scanner/dotnet-sonarscanner begin /k:"bsalo203_UseCase1" /o:"bsalo203" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build --no-restore
+        dotnet build UseCase1/UseCase1.csproj --no-restore
         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
