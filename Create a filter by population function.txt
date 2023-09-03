@@ -1,0 +1,59 @@
+o	Create a function that accepts a number as an attribute and can filter by ` population `. 
+o	The filter should search for countries where the population is less than provided number from attributes in the millions of people (e.g., by providing value `10`, I should find countries with a population less than 10m)
+in C# .Net 6
+ChatGPT
+To implement a function that filters countries based on a provided population threshold, we first need a list of countries and their respective populations. For simplicity's sake, I'll provide a hardcoded list, but in a real-world application, you would typically fetch this data from a database or an API.
+
+Below is a simple C# program using .NET 6 that demonstrates the desired functionality:
+
+csharp
+Copy code
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Country
+{
+    public string Name { get; set; }
+    public double PopulationInMillions { get; set; }
+}
+
+public class Program
+{
+    static List<Country> countries = new List<Country>
+    {
+        new Country { Name = "Luxembourg", PopulationInMillions = 0.613 },
+        new Country { Name = "Malta", PopulationInMillions = 0.493 },
+        new Country { Name = "Iceland", PopulationInMillions = 0.356 },
+        new Country { Name = "Hungary", PopulationInMillions = 9.7 },
+        // Add more countries as needed
+    };
+
+    public static void Main()
+    {
+        var threshold = 10; // Example threshold
+        var filteredCountries = FilterCountriesByPopulation(threshold);
+        
+        Console.WriteLine($"Countries with population less than {threshold} million:");
+        foreach(var country in filteredCountries)
+        {
+            Console.WriteLine($"- {country.Name}");
+        }
+    }
+
+    public static List<Country> FilterCountriesByPopulation(double populationThreshold)
+    {
+        return countries.Where(c => c.PopulationInMillions < populationThreshold).ToList();
+    }
+}
+In this example:
+
+We've defined a Country class to represent each country with its name and population (in millions).
+A hardcoded list of countries is created with their populations (in millions).
+The FilterCountriesByPopulation function filters countries based on the given threshold and returns the filtered list.
+The Main method demonstrates the functionality with a sample threshold of 10 million.
+Note: This is a simple example. In a real-world application, the list of countries and their populations would likely be more extensive and fetched from an external source like a database or an API.
+
+
+
+

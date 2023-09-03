@@ -19,6 +19,13 @@ namespace UseCase1.Services
             return _countries.Where(c => !string.IsNullOrEmpty(c.Name) && c.Name.Contains(countryName, System.StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
+        public async Task<List<OutputModel>> FilterByPopulation(int? populationInMillions)
+        {
+            List<OutputModel> _countries = await GetAllCountries();
+            int realPopulation = (populationInMillions == 0 ? 1 : populationInMillions ?? 1) * 1000000;
+            return _countries.Where(c => c.Population < realPopulation).ToList();
+        }
+
         public async Task<List<OutputModel>> GetAllCountries()
         {
             List<Country> countryList = await countriesClient.GetAllCountriesAsync() ?? new List<Country>();

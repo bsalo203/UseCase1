@@ -6,13 +6,15 @@ namespace UseCase1.Models
     {
         public Name? Name { get; set; }
         public List<string>? Capital { get; set; }
+        public int? Population { get; set; }
 
         internal OutputModel ConvertToOutput()
         {
             return new OutputModel
             {
                 Capital = Capital?[0] ?? null,
-                Name = Name?.Official
+                Name = Name?.Official,
+                Population = Population                
             };
         }
     }
