@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore /UseCase1/UseCase1.csproj
+      run: dotnet restore UseCase1/UseCase1.csproj
     - name: Build
       run: dotnet build --no-restore
     - name: Test
