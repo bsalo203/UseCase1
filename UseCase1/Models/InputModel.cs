@@ -4,6 +4,6 @@
     {
         public string? CountryName { get; set; }
         public int? PopulationInMillions { get; set; }
-        public string? String2 { get; set; }
+        public string? SortCountryName { get; set; }
     }
 }

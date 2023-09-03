@@ -34,5 +34,22 @@ namespace UseCase1.Services
 
             return outputModel;
         }
+
+        public async Task<List<OutputModel>> SortByCountryName(string sortCountryName)
+        {
+            List<OutputModel> _countries = await GetAllCountries();
+            if (sortCountryName.ToLower() == "ascend")
+            {
+                return _countries.OrderBy(c => c.Name).ToList();
+            }
+            else if (sortCountryName.ToLower() == "descend")
+            {
+                return _countries.OrderByDescending(c => c.Name).ToList();
+            }
+            else
+            {
+                throw new ArgumentException("Invalid sort order. Use 'ascend' or 'descend'.");
+            }
+        }
     }
 }

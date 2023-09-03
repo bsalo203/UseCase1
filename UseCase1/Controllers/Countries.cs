@@ -16,14 +16,24 @@ namespace UseCase1.Controllers
         }
 
         [HttpGet]
-        public List<OutputModel> GetAllCountries([FromQuery] InputModel input)
+        public IActionResult GetAllCountries([FromQuery] InputModel input)
         {
-            if (string.IsNullOrEmpty(input.CountryName) && input.PopulationInMillions == null)
-                return countriesService.GetAllCountries().Result;
-            else if (!string.IsNullOrEmpty(input.CountryName))
-                return countriesService.FilterByCountryName(input.CountryName).Result;
-            else
-                return countriesService.FilterByPopulation(input.PopulationInMillions).Result;
-        }
+            try
+            {
+                List<OutputModel> countries = countriesService.GetAllCountries().Result;
+                if (!string.IsNullOrEmpty(input.CountryName))
+                    return Ok(countriesService.FilterByCountryName(input.CountryName).Result);
+                else if (input.PopulationInMillions != null)
+                    return Ok(countriesService.FilterByPopulation(input.PopulationInMillions).Result);
+                else if (!string.IsNullOrEmpty(input.SortCountryName))
+                    return Ok(countriesService.SortByCountryName(input.SortCountryName ?? string.Empty).Result);
+                else
+                    return Ok(countries);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+}
     }
 }
