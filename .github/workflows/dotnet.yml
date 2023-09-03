@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: dotnet build UseCase1/UseCase1.csproj --no-restore
     - name: Test
-      run: dotnet test UseCase1/UseCase1.csproj --no-build --verbosity normal
+      run: dotnet test UseCase1Test/UseCase1Test.csproj --no-build --verbosity normal
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
       with:
